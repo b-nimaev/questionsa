@@ -5,10 +5,8 @@ export interface IUser extends Document {
   username: string;
   password?: string;
   role: "user" | "admin";
-  allowedLoginTime?: {
-    day: string;
-    hours: number[];
-  };
+  expiresAt?: Date;
+  isLoggedIn: boolean; // Флаг для отслеживания авторизации
   comparePassword: (password: string) => Promise<boolean>;
 }
 
@@ -16,21 +14,12 @@ const userSchema: Schema<IUser> = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String },
   role: { type: String, enum: ["user", "admin"], required: true },
-  allowedLoginTime: {
-    day: {
-      type: String,
-      required: function (this: IUser) {
-        return this.role === "user";
-      },
-    },
-    hours: {
-      type: [Number],
-      required: function (this: IUser) {
-        return this.role === "user";
-      },
-    },
-  },
+  expiresAt: { type: Date },
+  isLoggedIn: { type: Boolean, default: false }, // По умолчанию false
 });
+
+// Устанавливаем TTL индекс для автоматического удаления документов по полю expiresAt
+userSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 // Хеширование пароля перед сохранением
 userSchema.pre<IUser>("save", async function (next) {
