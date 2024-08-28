@@ -12,9 +12,6 @@ import searchRoutes from "./routes/searchRoutes";
 dotenv.config();
 
 const app = express();
-app.use("/", () => {
-  console.log("used /")
-})
 app.use(cors())
 // Middleware для парсинга JSON
 app.use(express.json());
