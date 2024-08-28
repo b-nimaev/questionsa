@@ -25,11 +25,11 @@ mongoose
   .catch((err) => console.log("MongoDB connection error:", err));
 
 // Роуты
-app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes); // Добавлен новый роут
-app.use("/api/categories", categoryRoutes);
-app.use("/api/subcategories", subcategoryRoutes);
-app.use("/api/faqs", authRoutes, faqRoutes);
-app.use('/api/search', searchRoutes); // Подключаем маршрут поиска
+app.use("/backendapi/users", userRoutes);
+app.use("/backendapi/auth", authRoutes); // Добавлен новый роут
+app.use("/backendapi/categories", categoryRoutes);
+app.use("/backendapi/subcategories", subcategoryRoutes);
+app.use("/backendapi/faqs", authRoutes, faqRoutes);
+app.use('/backendapi/search', searchRoutes); // Подключаем маршрут поиска
 
 export default app;
