@@ -20,7 +20,7 @@ app.use((0, cors_1.default)());
 // Middleware для парсинга JSON
 app.use(express_1.default.json());
 mongoose_1.default
-    .connect(process.env.MONGO_URI || "", {
+    .connect(process.env.MONGO_URI || "http://localhost:27017", {
     dbName: 'answers'
     // Без дополнительных опций, так как они больше не требуются
 })

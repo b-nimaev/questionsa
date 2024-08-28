@@ -17,14 +17,15 @@ app.use(cors())
 app.use(express.json());
 
 mongoose
-  .connect(process.env.MONGO_URI || "", {
-    dbName: 'answers'
+  .connect("mongodb://localhost:27017", {
+    dbName: "answers",
     // Без дополнительных опций, так как они больше не требуются
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection error:", err));
+
 // Роуты
-app.use("/api/users", authMiddleware, userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes); // Добавлен новый роут
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);

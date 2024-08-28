@@ -4,6 +4,7 @@ import {
   createSubcategory,
   deleteSubcategory,
   getSubcategory,
+  updateCategory,
 } from "../controllers/subcategoryController";
 import { authMiddleware } from "../middleware/authMiddleware";
 
@@ -29,5 +30,6 @@ router.delete(
   authMiddleware,
   deleteSubcategory
 );
+router.put("/:id", authMiddleware, updateCategory); // Обновление категории
 
 export default router;

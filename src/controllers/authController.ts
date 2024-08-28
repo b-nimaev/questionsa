@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import User from "../models/User";
+import User, { IUser } from "../models/User";
 import jwt from "jsonwebtoken";
 import Token from "../models/Token";
-
+interface AuthenticatedRequest extends Request {
+  user?: IUser; // Добавление пользовательского свойства user в интерфейс запроса
+}
 export const registerUser = async (req: Request, res: Response) => {
   const { username, password, role, activeDuration } = req.body;
 
@@ -100,10 +102,10 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUser = async (req: AuthenticatedRequest, res: Response) => {
   try {
     if (req.user) {
-      console.log(req.user)
+      console.log(req.user);
       const user = await User.findById(req.user._id);
 
       if (user) {
